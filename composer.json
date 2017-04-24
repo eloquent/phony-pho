@@ -1,0 +1,41 @@
+{
+    "name": "eloquent/phony-pho",
+    "description": "Phony for Pho.",
+    "keywords": ["mock", "mocking", "stub", "stubbing", "spy", "dummy", "double", "test", "fake"],
+    "homepage": "http://eloquent-software.com/phony/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Erin Millard",
+            "email": "ezzatron@gmail.com",
+            "homepage": "http://ezzatron.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "danielstjules/pho": "^1",
+        "eloquent/phony": "dev-remove-integrations"
+    },
+    "require-dev": {
+        "errors/exceptions": "^0.1",
+        "phpunit/phpunit": "^4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Eloquent\\Phony\\Pho\\": "src"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Eloquent\\Phony\\Pho\\": "test/src"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "5.4.99999"
+        }
+    }
+}

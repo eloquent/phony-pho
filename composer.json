@@ -14,7 +14,7 @@
     "require": {
         "php": ">=5.4",
         "danielstjules/pho": "^1",
-        "eloquent/phony": "dev-remove-integrations"
+        "eloquent/phony": "^1"
     },
     "require-dev": {
         "errors/exceptions": "^0.1",

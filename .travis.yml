@@ -24,7 +24,11 @@ matrix:
           sudo: required
           dist: trusty
           group: edge
-        - php: hhvm-3.15
+        - php: hhvm-3.18
+          sudo: required
+          dist: trusty
+          group: edge
+        - php: hhvm-3.18
           sudo: required
           dist: trusty
           group: edge
@@ -56,6 +60,5 @@ env:
 cache:
     directories:
         - $HOME/.composer
-        - .composer
 
 sudo: false

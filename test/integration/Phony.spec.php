@@ -12,17 +12,18 @@
 use Eloquent\Phony\Pho\Phony;
 
 describe('Phony', function () {
-    it('should record passing mock assertions', function () {
+    beforeEach(function () {
         $this->handle = Phony::mock('Eloquent\Phony\Pho\Test\TestClassA');
         $this->mock = $this->handle->get();
+    });
+
+    it('should record passing mock assertions', function () {
         $this->mock->testClassAMethodA('aardvark', 'bonobo');
 
         $this->handle->testClassAMethodA->calledWith('aardvark', 'bonobo');
     });
 
     it('should record failing mock assertions', function () {
-        $this->handle = Phony::mock('Eloquent\Phony\Pho\Test\TestClassA');
-        $this->mock = $this->handle->get();
         $this->mock->testClassAMethodA('aardvark', array('bonobo', 'capybara', 'dugong'));
         $this->mock->testClassAMethodA('armadillo', array('bonobo', 'chameleon', 'dormouse'));
 

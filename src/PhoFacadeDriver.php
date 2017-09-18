@@ -1,43 +1,34 @@
 <?php
 
-/*
- * This file is part of the Phony package.
- *
- * Copyright © 2017 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE file
- * that was distributed with this source code.
- */
+declare(strict_types=1);
 
 namespace Eloquent\Phony\Pho;
 
-use Eloquent\Phony\Facade\FacadeDriver;
+use Eloquent\Phony\Facade\FacadeDriverTrait;
 
 /**
  * A facade driver for Pho.
  */
-class PhoFacadeDriver extends FacadeDriver
+class PhoFacadeDriver
 {
+    use FacadeDriverTrait;
+
     /**
      * Get the static instance of this driver.
      *
-     * @return FacadeDriver The static driver.
+     * @return PhoFacadeDriver The static driver.
      */
-    public static function instance()
+    public static function instance(): self
     {
-        if (!self::$instance) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
+        return self::$instance ?? self::$instance = new self();
     }
 
     /**
      * Construct a new Pho facade driver.
      */
-    public function __construct()
+    private function __construct()
     {
-        parent::__construct(new PhoAssertionRecorder());
+        $this->initializeFacadeDriver(new PhoAssertionRecorder());
     }
 
     private static $instance;

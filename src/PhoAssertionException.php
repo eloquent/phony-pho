@@ -1,13 +1,6 @@
 <?php
 
-/*
- * This file is part of the Phony package.
- *
- * Copyright © 2017 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE file
- * that was distributed with this source code.
- */
+declare(strict_types=1);
 
 namespace Eloquent\Phony\Pho;
 
@@ -23,7 +16,7 @@ final class PhoAssertionException extends ExpectationException
      *
      * @param string $description The failure description.
      */
-    public function __construct($description)
+    public function __construct(string $description)
     {
         parent::__construct($description);
 

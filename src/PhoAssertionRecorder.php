@@ -1,13 +1,6 @@
 <?php
 
-/*
- * This file is part of the Phony package.
- *
- * Copyright © 2017 Erin Millard
- *
- * For the full copyright and license information, please view the LICENSE file
- * that was distributed with this source code.
- */
+declare(strict_types=1);
 
 namespace Eloquent\Phony\Pho;
 
@@ -22,20 +15,6 @@ use Exception;
  */
 class PhoAssertionRecorder implements AssertionRecorder
 {
-    /**
-     * Get the static instance of this recorder.
-     *
-     * @return AssertionRecorder The static recorder.
-     */
-    public static function instance()
-    {
-        if (!self::$instance) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
-
     /**
      * Set the call verifier factory.
      *
@@ -54,7 +33,7 @@ class PhoAssertionRecorder implements AssertionRecorder
      *
      * @return EventCollection The result.
      */
-    public function createSuccess(array $events = array())
+    public function createSuccess(array $events = []): EventCollection
     {
         return new EventSequence($events, $this->callVerifierFactory);
     }
@@ -66,8 +45,9 @@ class PhoAssertionRecorder implements AssertionRecorder
      *
      * @return EventCollection The result.
      */
-    public function createSuccessFromEventCollection(EventCollection $events)
-    {
+    public function createSuccessFromEventCollection(
+        EventCollection $events
+    ): EventCollection {
         return $events;
     }
 
@@ -78,7 +58,7 @@ class PhoAssertionRecorder implements AssertionRecorder
      *
      * @throws Exception If this recorder throws exceptions.
      */
-    public function createFailure($description)
+    public function createFailure(string $description)
     {
         throw new PhoAssertionException($description);
     }

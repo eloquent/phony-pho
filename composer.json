@@ -12,13 +12,13 @@
         }
     ],
     "require": {
-        "php": ">=5.4",
+        "php": ">=7",
         "danielstjules/pho": "^1",
-        "eloquent/phony": "^1"
+        "eloquent/phony": "dev-php72"
     },
     "require-dev": {
-        "errors/exceptions": "^0.1",
-        "phpunit/phpunit": "^4"
+        "errors/exceptions": "^0.2",
+        "phpunit/phpunit": "^6"
     },
     "autoload": {
         "psr-4": {
@@ -35,7 +35,7 @@
     },
     "config": {
         "platform": {
-            "php": "5.4.99999"
+            "php": "7.0.99999"
         }
     }
 }

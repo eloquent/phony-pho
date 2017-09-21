@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Eloquent\Phony\Pho\Phony;
 use Eloquent\Phony\Pho\Test\TestClassA;
 

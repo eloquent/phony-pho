@@ -20,6 +20,7 @@ use Eloquent\Phony\Stub\StubVerifier;
 use Exception;
 use InvalidArgumentException;
 use ReflectionClass;
+use ReflectionType;
 
 /**
  * Create a new mock builder.
@@ -34,7 +35,7 @@ use ReflectionClass;
  */
 function mockBuilder($types = []): MockBuilder
 {
-    return PhoFacadeDriver::instance()->mockBuilderFactory->create($types);
+    return Globals::$container->mockBuilderFactory->create($types);
 }
 
 /**
@@ -50,10 +51,10 @@ function mockBuilder($types = []): MockBuilder
  */
 function mock($types = []): InstanceHandle
 {
-    $driver = PhoFacadeDriver::instance();
+    $container = Globals::$container;
 
-    return $driver->handleFactory->instanceHandle(
-        $driver->mockBuilderFactory->create($types)->full()
+    return $container->handleFactory->instanceHandle(
+        $container->mockBuilderFactory->create($types)->full()
     );
 }
 
@@ -75,10 +76,10 @@ function mock($types = []): InstanceHandle
  */
 function partialMock($types = [], $arguments = []): InstanceHandle
 {
-    $driver = PhoFacadeDriver::instance();
+    $container = Globals::$container;
 
-    return $driver->handleFactory->instanceHandle(
-        $driver->mockBuilderFactory->create($types)->partialWith($arguments)
+    return $container->handleFactory->instanceHandle(
+        $container->mockBuilderFactory->create($types)->partialWith($arguments)
     );
 }
 
@@ -92,20 +93,20 @@ function partialMock($types = [], $arguments = []): InstanceHandle
  */
 function on($mock): InstanceHandle
 {
-    return PhoFacadeDriver::instance()->handleFactory->instanceHandle($mock);
+    return Globals::$container->handleFactory->instanceHandle($mock);
 }
 
 /**
  * Create a new static handle.
  *
- * @param Handle|ReflectionClass|object|string $class The class.
+ * @param Mock|Handle|ReflectionClass|string $class The class.
  *
  * @return StaticHandle  The newly created handle.
  * @throws MockException If the supplied class name is not a mock class.
  */
 function onStatic($class): StaticHandle
 {
-    return PhoFacadeDriver::instance()->handleFactory->staticHandle($class);
+    return Globals::$container->handleFactory->staticHandle($class);
 }
 
 /**
@@ -115,9 +116,9 @@ function onStatic($class): StaticHandle
  *
  * @return SpyVerifier The new spy.
  */
-function spy($callback = null): SpyVerifier
+function spy(callable $callback = null): SpyVerifier
 {
-    return PhoFacadeDriver::instance()->spyVerifierFactory
+    return Globals::$container->spyVerifierFactory
         ->createFromCallback($callback);
 }
 
@@ -132,7 +133,7 @@ function spy($callback = null): SpyVerifier
  */
 function spyGlobal(string $function, string $namespace): SpyVerifier
 {
-    return PhoFacadeDriver::instance()->spyVerifierFactory
+    return Globals::$container->spyVerifierFactory
         ->createGlobal($function, $namespace);
 }
 
@@ -143,9 +144,9 @@ function spyGlobal(string $function, string $namespace): SpyVerifier
  *
  * @return StubVerifier The new stub.
  */
-function stub($callback = null): StubVerifier
+function stub(callable $callback = null): StubVerifier
 {
-    return PhoFacadeDriver::instance()->stubVerifierFactory
+    return Globals::$container->stubVerifierFactory
         ->createFromCallback($callback);
 }
 
@@ -163,7 +164,7 @@ function stub($callback = null): StubVerifier
  */
 function stubGlobal(string $function, string $namespace): StubVerifier
 {
-    return PhoFacadeDriver::instance()->stubVerifierFactory
+    return Globals::$container->stubVerifierFactory
         ->createGlobal($function, $namespace);
 }
 
@@ -173,8 +174,7 @@ function stubGlobal(string $function, string $namespace): StubVerifier
  */
 function restoreGlobalFunctions()
 {
-    return PhoFacadeDriver::instance()->functionHookManager
-        ->restoreGlobalFunctions();
+    return Globals::$container->functionHookManager->restoreGlobalFunctions();
 }
 
 /**
@@ -186,8 +186,7 @@ function restoreGlobalFunctions()
  */
 function checkInOrder(...$events)
 {
-    return PhoFacadeDriver::instance()->eventOrderVerifier
-        ->checkInOrder(...$events);
+    return Globals::$container->eventOrderVerifier->checkInOrder(...$events);
 }
 
 /**
@@ -201,7 +200,7 @@ function checkInOrder(...$events)
  */
 function inOrder(...$events): EventCollection
 {
-    return PhoFacadeDriver::instance()->eventOrderVerifier->inOrder(...$events);
+    return Globals::$container->eventOrderVerifier->inOrder(...$events);
 }
 
 /**
@@ -214,8 +213,7 @@ function inOrder(...$events): EventCollection
  */
 function checkAnyOrder(...$events)
 {
-    return PhoFacadeDriver::instance()->eventOrderVerifier
-        ->checkAnyOrder(...$events);
+    return Globals::$container->eventOrderVerifier->checkAnyOrder(...$events);
 }
 
 /**
@@ -229,8 +227,7 @@ function checkAnyOrder(...$events)
  */
 function anyOrder(...$events): EventCollection
 {
-    return PhoFacadeDriver::instance()->eventOrderVerifier
-        ->anyOrder(...$events);
+    return Globals::$container->eventOrderVerifier->anyOrder(...$events);
 }
 
 /**
@@ -240,7 +237,7 @@ function anyOrder(...$events): EventCollection
  */
 function any(): Matcher
 {
-    return PhoFacadeDriver::instance()->matcherFactory->any();
+    return Globals::$container->matcherFactory->any();
 }
 
 /**
@@ -252,7 +249,7 @@ function any(): Matcher
  */
 function equalTo($value): Matcher
 {
-    return PhoFacadeDriver::instance()->matcherFactory->equalTo($value, false);
+    return Globals::$container->matcherFactory->equalTo($value, false);
 }
 
 /**
@@ -264,7 +261,7 @@ function equalTo($value): Matcher
  */
 function anInstanceOf($type): Matcher
 {
-    return PhoFacadeDriver::instance()->matcherFactory->anInstanceOf($type);
+    return Globals::$container->matcherFactory->anInstanceOf($type);
 }
 
 /**
@@ -283,8 +280,20 @@ function wildcard(
     int $minimumArguments = 0,
     int $maximumArguments = -1
 ): WildcardMatcher {
-    return PhoFacadeDriver::instance()->matcherFactory
+    return Globals::$container->matcherFactory
         ->wildcard($value, $minimumArguments, $maximumArguments);
+}
+
+/**
+ * Get an "empty" value for the supplied type.
+ *
+ * @param ReflectionType $type The type.
+ *
+ * @return mixed An "empty" value of the supplied type.
+ */
+function emptyValue(ReflectionType $type)
+{
+    return Globals::$container->emptyValueFactory->fromType($type);
 }
 
 /**
@@ -298,7 +307,7 @@ function wildcard(
  */
 function setExportDepth(int $depth): int
 {
-    return PhoFacadeDriver::instance()->exporter->setDepth($depth);
+    return Globals::$container->exporter->setDepth($depth);
 }
 
 /**
@@ -310,8 +319,8 @@ function setExportDepth(int $depth): int
  */
 function setUseColor(bool $useColor = null)
 {
-    $facade = PhoFacadeDriver::instance();
+    $container = Globals::$container;
 
-    $facade->assertionRenderer->setUseColor($useColor);
-    $facade->differenceEngine->setUseColor($useColor);
+    $container->assertionRenderer->setUseColor($useColor);
+    $container->differenceEngine->setUseColor($useColor);
 }

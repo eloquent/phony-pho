@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Eloquent\Phony\Pho;
 
-use Eloquent\Phony\Assertion\AssertionRecorder;
+use Eloquent\Phony\Assertion\AssertionRecorder as PhonyAssertionRecorder;
 use Eloquent\Phony\Call\CallVerifierFactory;
 use Eloquent\Phony\Event\EventCollection;
 use Eloquent\Phony\Event\EventSequence;
@@ -13,7 +13,7 @@ use Exception;
 /**
  * An assertion recorder for Pho.
  */
-class PhoAssertionRecorder implements AssertionRecorder
+class AssertionRecorder implements PhonyAssertionRecorder
 {
     /**
      * Set the call verifier factory.
@@ -60,7 +60,7 @@ class PhoAssertionRecorder implements AssertionRecorder
      */
     public function createFailure(string $description)
     {
-        throw new PhoAssertionException($description);
+        throw new AssertionException($description);
     }
 
     private static $instance;

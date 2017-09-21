@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Eloquent\Phony\Pho;
 
 use Countable;
@@ -21,6 +23,7 @@ use Eloquent\Phony\Pho\Test\TestEvent;
 use Eloquent\Phony\Spy\SpyVerifier;
 use Eloquent\Phony\Stub\StubVerifier;
 use PHPUnit\Framework\TestCase;
+use ReflectionFunction;
 use ReflectionObject;
 
 class PhonyTest extends TestCase
@@ -344,7 +347,7 @@ class PhonyTest extends TestCase
 
     public function testInOrderMethodFailure()
     {
-        $this->expectException(PhoAssertionException::class);
+        $this->expectException(AssertionException::class);
         Phony::inOrder($this->eventB, $this->eventA);
     }
 
@@ -371,7 +374,7 @@ class PhonyTest extends TestCase
 
     public function testInOrderFunctionFailure()
     {
-        $this->expectException(PhoAssertionException::class);
+        $this->expectException(AssertionException::class);
         inOrder($this->eventB, $this->eventA);
     }
 
@@ -443,6 +446,28 @@ class PhonyTest extends TestCase
         $this->assertSame(2, $actual->maximumArguments());
     }
 
+    public function testEmptyValue()
+    {
+        $typeA = (new ReflectionFunction(function (): bool {}))->getReturnType();
+        $typeB = (new ReflectionFunction(function (): int {}))->getReturnType();
+        $typeC = (new ReflectionFunction(function (): string {}))->getReturnType();
+
+        $this->assertFalse(Phony::emptyValue($typeA));
+        $this->assertSame(0, Phony::emptyValue($typeB));
+        $this->assertSame('', Phony::emptyValue($typeC));
+    }
+
+    public function testEmptyValueFunction()
+    {
+        $typeA = (new ReflectionFunction(function (): bool {}))->getReturnType();
+        $typeB = (new ReflectionFunction(function (): int {}))->getReturnType();
+        $typeC = (new ReflectionFunction(function (): string {}))->getReturnType();
+
+        $this->assertFalse(emptyValue($typeA));
+        $this->assertSame(0, emptyValue($typeB));
+        $this->assertSame('', emptyValue($typeC));
+    }
+
     public function testSetExportDepth()
     {
         $this->assertSame(1, Phony::setExportDepth(111));
@@ -479,7 +504,7 @@ class PhonyTest extends TestCase
 
         $assertionRecorder = $property->getValue($callVerifierFactory);
 
-        $this->assertInstanceOf(PhoAssertionRecorder::class, $assertionRecorder);
+        $this->assertInstanceOf(AssertionRecorder::class, $assertionRecorder);
     }
 
     private function assertStubAssertionRecorder($stub)
@@ -496,6 +521,6 @@ class PhonyTest extends TestCase
 
         $assertionRecorder = $property->getValue($callVerifierFactory);
 
-        $this->assertInstanceOf(PhoAssertionRecorder::class, $assertionRecorder);
+        $this->assertInstanceOf(AssertionRecorder::class, $assertionRecorder);
     }
 }

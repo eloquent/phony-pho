@@ -9,7 +9,7 @@ use pho\Exception\ExpectationException;
 /**
  * Emulates Pho's expectation exception for improved assertion failure output.
  */
-final class PhoAssertionException extends ExpectationException
+final class AssertionException extends ExpectationException
 {
     /**
      * Construct a new Pho assertion exception.

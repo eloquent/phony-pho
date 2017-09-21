@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Eloquent\Phony\Pho\Test;
 
 class TestClassB extends TestClassA implements TestInterfaceB

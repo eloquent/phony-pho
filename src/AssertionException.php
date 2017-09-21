@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Eloquent\Phony\Pho;
 
+use Eloquent\Phony\Assertion\Exception\AssertionException as PhonyAssertionException;
 use pho\Exception\ExpectationException;
 
 /**
@@ -18,21 +19,8 @@ final class AssertionException extends ExpectationException
      */
     public function __construct(string $description)
     {
+        PhonyAssertionException::trim($this);
+
         parent::__construct($description);
-
-        foreach ($this->getTrace() as $call) {
-            if (!isset($call['class'])) {
-                continue;
-            }
-
-            if (0 !== strpos($call['class'], 'Eloquent\Phony\\')) {
-                break;
-            }
-
-            if (isset($call['file']) && isset($call['line'])) {
-                $this->file = $call['file'];
-                $this->line = $call['line'];
-            }
-        }
     }
 }

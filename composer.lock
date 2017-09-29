@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "82aeefaa97a63c8a6bfad52f0cb7ace7",
+    "content-hash": "6e51a306bc8126703d42ce73a4aea36b",
     "packages": [
         {
             "name": "danielstjules/pho",
@@ -57,16 +57,16 @@
         },
         {
             "name": "eloquent/phony",
-            "version": "dev-php72",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/eloquent/phony.git",
-                "reference": "4dae2a1fbe78ae8b9aced2f19e63842bc7344a84"
+                "reference": "96c6618d54b21b01eacf4b8aea5a279496b466f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eloquent/phony/zipball/4dae2a1fbe78ae8b9aced2f19e63842bc7344a84",
-                "reference": "4dae2a1fbe78ae8b9aced2f19e63842bc7344a84",
+                "url": "https://api.github.com/repos/eloquent/phony/zipball/96c6618d54b21b01eacf4b8aea5a279496b466f6",
+                "reference": "96c6618d54b21b01eacf4b8aea5a279496b466f6",
                 "shasum": ""
             },
             "require": {
@@ -114,7 +114,7 @@
                 "stubbing",
                 "test"
             ],
-            "time": "2017-09-21T12:58:27+00:00"
+            "time": "2017-09-29T01:22:33+00:00"
         }
     ],
     "packages-dev": [
@@ -577,16 +577,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.10",
+            "version": "v2.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d"
+                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/634bae8e911eefa89c1abfbf1b66da679ac8f54d",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5da4d3c796c275c55f057af5a643ae297d96b4d8",
+                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
                 "shasum": ""
             },
             "require": {
@@ -621,7 +621,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-03-13T16:27:32+00:00"
+            "time": "2017-09-27T21:40:39+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -2636,9 +2636,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "eloquent/phony": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

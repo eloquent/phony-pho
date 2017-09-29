@@ -14,7 +14,7 @@
     "require": {
         "php": ">=7",
         "danielstjules/pho": "^1",
-        "eloquent/phony": "dev-php72"
+        "eloquent/phony": "^2"
     },
     "require-dev": {
         "errors/exceptions": "^0.2",
